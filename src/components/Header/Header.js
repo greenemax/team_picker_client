@@ -1,11 +1,15 @@
 import React, { Fragment } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-
+import NavDropdown from 'react-bootstrap/NavDropdown'
 const authenticatedOptions = (
   <Fragment>
-    <Nav.Link href="#change-password">Change Password</Nav.Link>
-    <Nav.Link href="#sign-out">Sign Out</Nav.Link>
+    <NavDropdown title="My Account" id="basic-nav-dropdown">
+      <NavDropdown.Item href="#change-password"><Nav.Link href="#change-password">Change Password</Nav.Link></NavDropdown.Item>
+      <NavDropdown.Item href="#sign-out"><Nav.Link href="#sign-out">Sign Out</Nav.Link></NavDropdown.Item>
+      <NavDropdown.Item href="#get-history"><Nav.Link href="#get-history">View Past Lineups</Nav.Link></NavDropdown.Item>
+    </NavDropdown>
+    <Nav.Link href="#lineup">My Lineup</Nav.Link>
   </Fragment>
 )
 
@@ -18,14 +22,14 @@ const unauthenticatedOptions = (
 
 const alwaysOptions = (
   <Fragment>
-    <Nav.Link to="/">Home</Nav.Link>
+    <Nav.Link href="#players">Players</Nav.Link>
   </Fragment>
 )
 
 const Header = ({ user }) => (
-  <Navbar bg="primary" variant="dark" expand="md">
-    <Navbar.Brand href="#">
-      react-auth-template
+  <Navbar className="navBar" expand="md">
+    <Navbar.Brand style={{ color: '#1F4052' }} className="navBar">
+      <strong>DREAM TEAM</strong>
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">

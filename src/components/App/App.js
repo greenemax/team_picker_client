@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import { Route } from 'react-router-dom'
+import React, { useState, Fragment } from 'react'
+import { Route, Redirect } from 'react-router-dom'
 
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
@@ -8,56 +8,67 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import ProductsPage from '../Players/playersPage'
+import SearchProducts from '../Players/searchPlayers'
+import Confirmation from '../LineupConfirm/lineupConfirm'
+import CurrentLineup from '../Lineup/currentLineup'
+import LineupHistory from '../LineupHistory/LineupHistory'
+// import Checkout from '../Checkout/Checkout'
 
-class App extends Component {
-  constructor () {
-    super()
+const App = () => {
+  const [user, setUser] = useState(null)
+  const [msgAlerts, setMsgAlerts] = useState([])
+  const [search, setSearch] = useState('')
 
-    this.state = {
-      user: null,
-      msgAlerts: []
-    }
+  const clearUser = () => setUser(null)
+
+  const msgAlert = ({ heading, message, variant }) => {
+    setMsgAlerts([...msgAlerts, { heading, message, variant }])
   }
 
-  setUser = user => this.setState({ user })
-
-  clearUser = () => this.setState({ user: null })
-
-  msgAlert = ({ heading, message, variant }) => {
-    this.setState({ msgAlerts: [...this.state.msgAlerts, { heading, message, variant }] })
-  }
-
-  render () {
-    const { msgAlerts, user } = this.state
-
-    return (
-      <Fragment>
-        <Header user={user} />
-        {msgAlerts.map((msgAlert, index) => (
-          <AutoDismissAlert
-            key={index}
-            heading={msgAlert.heading}
-            variant={msgAlert.variant}
-            message={msgAlert.message}
-          />
-        ))}
-        <main className="container">
-          <Route path='/sign-up' render={() => (
-            <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
-          )} />
-          <Route path='/sign-in' render={() => (
-            <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
-          )} />
-          <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword msgAlert={this.msgAlert} user={user} />
-          )} />
-        </main>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <Header user={user} />
+      {msgAlerts.map((msgAlert, index) => (
+        <AutoDismissAlert
+          key={index}
+          heading={msgAlert.heading}
+          variant={msgAlert.variant}
+          message={msgAlert.message}
+        />
+      ))}
+      <main className="container bodyContainer" >
+        <Redirect from="/" to="/players" />
+        <AuthenticatedRoute exact path='/lineup' user={user} render={() => (
+          <CurrentLineup msgAlert={msgAlert} user={user}/>
+        )} />
+        <AuthenticatedRoute path='/confirmation' user={user} render={() => (
+          <Confirmation msgAlert={msgAlert} user={user}/>
+        )} />
+        <Route path='/players' render={() => (
+          <ProductsPage msgAlert={msgAlert} user={user} setSearch={setSearch}/>
+        )} />
+        <Route path='/search-players' render={() => (
+          <SearchProducts msgAlert={msgAlert} user={user} search={search} setSearch={setSearch}/>
+        )} />
+        <Route path='/sign-up' render={() => (
+          <SignUp msgAlert={msgAlert} setUser={setUser}/>
+        )} />
+        <Route path='/sign-in' render={() => (
+          <SignIn msgAlert={msgAlert} setUser={setUser}/>
+        )} />
+        <AuthenticatedRoute user={user} path='/sign-out' render={() => (
+          <SignOut msgAlert={msgAlert} clearUser={clearUser} user={user}/>
+        )} />
+        <AuthenticatedRoute user={user} path='/change-password' render={() => (
+          <ChangePassword msgAlert={msgAlert} user={user}/>
+        )} />
+        <AuthenticatedRoute user={user} path='/get-history' render={() => (
+          <LineupHistory msgAlert={msgAlert} user={user} />
+        )} />
+      </main>
+    </Fragment>
+  )
 }
 
 export default App

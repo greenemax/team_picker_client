@@ -28,7 +28,7 @@ export const addToLineup = (id, player, user) => {
 
 export const removeFromLineup = (id, player, user) => {
   return axios({
-    url: apiUrl + `/shopping-cart/${id}/products`,
+    url: apiUrl + `/lineup/${id}/players`,
     method: 'PATCH',
     data: {
       'player': player

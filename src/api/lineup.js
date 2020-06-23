@@ -29,7 +29,7 @@ export const getHistory = user => {
   })
 }
 
-export const changeCartActive = (user, id, boolean) => {
+export const changeLineupActive = (user, id, boolean) => {
   return axios({
     url: apiUrl + `/lineup/${id}/active`,
     method: 'PATCH',

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
-
+import { withRouter, Link } from 'react-router-dom'
 import { signUp, signIn } from '../../api/auth'
+import { createEmptyLineup } from '../../api/lineup'
 import messages from '../AutoDismissAlert/messages'
-
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
@@ -24,12 +23,24 @@ class SignUp extends Component {
 
   onSignUp = event => {
     event.preventDefault()
-
+    // let userId = null
+    // let userToken = null
     const { msgAlert, history, setUser } = this.props
-
     signUp(this.state)
       .then(() => signIn(this.state))
-      .then(res => setUser(res.data.user))
+      // .then(data => {
+      //   userId = data.data.user._id
+      //   userToken = data.data.user.token
+      //   return data
+      // })
+      .then(res => {
+        const currUser = res.data.user
+        setUser(currUser)
+        return currUser
+      })
+      .then(currUser => {
+        createEmptyLineup(currUser)
+      })
       .then(() => msgAlert({
         heading: 'Sign Up Success',
         message: messages.signUpSuccess,
@@ -52,7 +63,7 @@ class SignUp extends Component {
     return (
       <div className="row">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <h3>Sign Up</h3>
+          <h3 className="title">Sign Up</h3>
           <Form onSubmit={this.onSignUp}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
@@ -87,6 +98,7 @@ class SignUp extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
+            <p> Already have an account? <Link to="/sign-in">Sign In Here</Link></p>
             <Button
               variant="primary"
               type="submit"
