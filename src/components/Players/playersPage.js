@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import Form from 'react-bootstrap/Form'
+
 const PlayersPage = ({ user, msgAlert, setSearch }) => {
   const [players, setPlayers] = useState([])
   const [isSearch, setIsSearch] = useState(false)
@@ -27,14 +28,19 @@ const PlayersPage = ({ user, msgAlert, setSearch }) => {
   }, [isSearch])
 
   const onAddToLineup = (event, player) => {
+    event.preventDefault()
     // get all lineups belonging to current user
     getHistory(user)
       .then(data => {
-        const lineup = data.data.lineup
+        const lineups = data.data.lineup
         // find the current active lineup
-        const activeLineup = lineup.find(lineup => lineup.active)
-        addToLineup(activeLineup._id, player, user)
+        const activeLineup = lineups.find(lineup => lineup.active)
+        console.log('this is player', player)
+        return addToLineup(activeLineup._id, player, user) // return the promise call so it continues down the chain
       })
+      // .then(lineup => {
+      //   console.log(lineup) // do something here with the response from the API (might be empty for PATCH)
+      // })
       .catch(() => {
         msgAlert({
           heading: 'Add To Lineup Failed',
@@ -43,11 +49,6 @@ const PlayersPage = ({ user, msgAlert, setSearch }) => {
         })
       })
   }
-
-  // const convertDollar = (num) => {
-  //   const total = num * 0.01
-  //   return total.toFixed(2)
-  // }
 
   const handleChange = event => {
     setLocalSearch(event.target.value)
@@ -75,7 +76,7 @@ const PlayersPage = ({ user, msgAlert, setSearch }) => {
                   <Card.Title><h3>{player.name}</h3></Card.Title>
                   <h4> ${player.cost} </h4>
                   <h6>Position: {player.category}</h6>
-                  {user && <Button onClick={() => onAddToLineup(event, player)}>Add To Lineup</Button>}
+                  {user && <Button onClick={ (event) => onAddToLineup(event, player) }>Add To Lineup</Button>}
                 </Card.Body>
               </Card>
             </div>

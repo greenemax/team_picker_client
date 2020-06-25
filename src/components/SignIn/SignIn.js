@@ -27,17 +27,14 @@ class SignIn extends Component {
     signIn(this.state)
       .then(res => {
         setUser(res.data.user)
-        return res.data.user.stripeId
-      })
-      .then(stripeId => {
-        this.props.setCustomer(stripeId)
+        return res.data.user
       })
       .then(() => msgAlert({
         heading: 'Sign In Success',
         message: messages.signInSuccess,
         variant: 'success'
       }))
-      .then(() => history.push('/products'))
+      .then(() => history.push('/players'))
       .catch(error => {
         this.setState({ email: '', password: '' })
         msgAlert({
@@ -78,7 +75,7 @@ class SignIn extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-            <p> First time building with Dream Team? <Link to="/sign-up">Sign Up Here</Link></p>
+            <p> First time building a Dream Team? <Link to="/sign-up">Sign Up Here</Link></p>
             <Button
               variant="primary"
               type="submit"

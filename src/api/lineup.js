@@ -10,8 +10,7 @@ export const createEmptyLineup = user => {
         'players': [],
         'user': `${user._id}`,
         'active': true,
-        'totalCost': 0,
-        'stripeId': null
+        'totalCost': 0
       }
     },
     headers: {
@@ -22,7 +21,7 @@ export const createEmptyLineup = user => {
 
 export const getHistory = user => {
   return axios({
-    url: apiUrl + '/lineup',
+    url: apiUrl + '/lineups',
     headers: {
       'Authorization': `Bearer ${user.token}`
     }

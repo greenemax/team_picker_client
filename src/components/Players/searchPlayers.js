@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import Form from 'react-bootstrap/Form'
 
-const SearchProducts = ({ search, user, msgAlert, setSearch }) => {
+const SearchPlayers = ({ search, user, msgAlert, setSearch }) => {
   const [players, setPlayers] = useState([])
   const [localSearch, setLocalSearch] = useState('')
   const [reloadResults, setReloadResults] = useState(false)
@@ -23,7 +23,7 @@ const SearchProducts = ({ search, user, msgAlert, setSearch }) => {
         for (let i = 0; i < players.length; i++) {
           const currPlayer = players[i]
           const nameTracker = []
-          // create an array of the words in the title of the current product
+          // create an array of the words in the title of the current player
           const nameWords = currPlayer.name.split(' ')
           // loop through title words
           for (let z = 0; z < nameWords.length; z++) {
@@ -130,4 +130,4 @@ const SearchProducts = ({ search, user, msgAlert, setSearch }) => {
   }
 }
 
-export default withRouter(SearchProducts)
+export default withRouter(SearchPlayers)

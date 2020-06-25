@@ -28,7 +28,7 @@ const alwaysOptions = (
 
 const Header = ({ user }) => (
   <Navbar className="navBar" expand="md">
-    <Navbar.Brand style={{ color: '#1F4052' }} className="navBar">
+    <Navbar.Brand style={{ color: '#ffffff' }} className="navBar">
       <strong>DREAM TEAM</strong>
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />

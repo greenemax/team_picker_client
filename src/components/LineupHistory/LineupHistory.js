@@ -24,7 +24,7 @@ const LineupHistory = ({ user, msgAlert }) => {
           for (let i = 0; i < activeLineup.players.length; i++) {
             const currPlayer = activeLineup.players[i]
             if (deepIndexOf(currLineup.players, currPlayer) === -1) {
-              currLineup.products.push(currLineup)
+              currLineup.players.push(currLineup)
               const index = deepIndexOf(currLineup.players, currPlayer)
               currLineup.quantities[index] = 1
             } else {
