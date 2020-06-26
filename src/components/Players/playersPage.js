@@ -73,7 +73,7 @@ const PlayersPage = ({ user, msgAlert, setSearch }) => {
             <div key={player._id}>
               <Card style={{ width: '12rem' }} >
                 <Card.Body>
-                  <Card.Title><h3>{player.name}</h3></Card.Title>
+                  <Card.Title><h4>{player.name}</h4></Card.Title>
                   <h4> ${player.cost} </h4>
                   <h6>Position: {player.category}</h6>
                   {user && <Button onClick={ (event) => onAddToLineup(event, player) }>Add To Lineup</Button>}

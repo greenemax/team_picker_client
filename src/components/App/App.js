@@ -9,7 +9,6 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import PlayersPage from '../Players/playersPage'
-import SearchPlayers from '../Players/searchPlayers'
 import Confirmation from '../LineupConfirm/lineupConfirm'
 import CurrentLineup from '../Lineup/currentLineup'
 import LineupHistory from '../LineupHistory/LineupHistory'
@@ -17,7 +16,6 @@ import LineupHistory from '../LineupHistory/LineupHistory'
 const App = () => {
   const [user, setUser] = useState(null)
   const [msgAlerts, setMsgAlerts] = useState([])
-  const [search, setSearch] = useState('')
 
   const clearUser = () => setUser(null)
 
@@ -45,10 +43,7 @@ const App = () => {
           <Confirmation msgAlert={msgAlert} user={user}/>
         )} />
         <Route path='/players' render={() => (
-          <PlayersPage msgAlert={msgAlert} user={user} setSearch={setSearch}/>
-        )} />
-        <Route path='/search-players' render={() => (
-          <SearchPlayers msgAlert={msgAlert} user={user} search={search} setSearch={setSearch}/>
+          <PlayersPage msgAlert={msgAlert} user={user} />
         )} />
         <Route path='/sign-up' render={() => (
           <SignUp msgAlert={msgAlert} setUser={setUser}/>

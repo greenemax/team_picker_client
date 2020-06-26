@@ -12,21 +12,28 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
   const [lineup, setLineup] = useState({
     players: [],
     quantities: [],
-    totalCost: 0
+    totalCost: 0,
+    active: true
   })
   const [rerender, setRerender] = useState(false)
 
   useEffect(() => {
     getHistory(user)
       .then(data => {
+        console.log('lineups are ', data.data.lineup)
         const lineups = data.data.lineup
         const activeLineup = lineups.find(lineup => lineup.active)
+        console.log('activeLinup is ', activeLineup)
         const currLineup = {
           players: [],
           quantities: [],
-          totalCost: 0
+          totalCost: 0,
+          active: true
         }
         currLineup.totalCost = activeLineup.totalCost
+        currLineup.players = activeLineup.players
+        console.log('currLineup.players before loop is ', currLineup.players)
+
         for (let i = 0; i < activeLineup.players.length; i++) {
           const currPlayer = activeLineup.player[i]
           if (deepIndexOf(currLineup.players, currPlayer) === -1) {
@@ -38,11 +45,13 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
             currLineup.quantities[index] += 1
           }
         }
+
+        console.log('currLineup.players after loop is ', currLineup.players)
         setLineup(currLineup)
       })
       .catch(() => {
         msgAlert({
-          heading: 'Lineup Failed',
+          heading: 'Lineup Not Found',
           message: messages.getLineupFailure,
           variant: 'danger'
         })
@@ -53,6 +62,7 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
   // get all lineups belonging to current user
     getHistory(user)
       .then(data => {
+        console.log('data is ', data)
         const lineups = data.data.lineup
         const activeLineup = lineups.find(lineup => lineup.active)
         removeFromLineup(activeLineup._id, player, user)
