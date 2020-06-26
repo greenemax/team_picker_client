@@ -42,7 +42,7 @@ class SignUp extends Component {
         console.log(currUser)
         createEmptyLineup(currUser)
         console.log(currUser)
-        return currUser.save()
+        // return currUser.save()
       })
       .then(() => msgAlert({
         heading: 'Sign Up Success',
