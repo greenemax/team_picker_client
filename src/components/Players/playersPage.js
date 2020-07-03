@@ -32,10 +32,10 @@ const PlayersPage = ({ user, msgAlert, setSearch }) => {
     // get all lineups belonging to current user
     getHistory(user)
       .then(data => {
-        const lineups = data.data.lineup
+        const activeLineup = data.data.lineup
         // find the current active lineup
-        const activeLineup = lineups.find(lineup => lineup.active)
-        console.log('this is player', player)
+        console.log(data)
+        // console.log('this is player', player)
         return addToLineup(activeLineup._id, player, user) // return the promise call so it continues down the chain
       })
       // .then(lineup => {

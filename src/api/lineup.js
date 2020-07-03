@@ -4,7 +4,7 @@ import axios from 'axios'
 export const createEmptyLineup = user => {
   return axios({
     url: apiUrl + '/lineup',
-    method: 'PATCH',
+    method: 'POST',
     data: {
       'lineup': {
         'players': [],

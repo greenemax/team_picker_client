@@ -40,10 +40,10 @@ class SignUp extends Component {
       })
       .then(currUser => {
         console.log(currUser)
-        createEmptyLineup(currUser)
-        console.log(currUser)
+        return createEmptyLineup(currUser)
         // return currUser.save()
       })
+      .then(console.log)
       .then(() => msgAlert({
         heading: 'Sign Up Success',
         message: messages.signUpSuccess,

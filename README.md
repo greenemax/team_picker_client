@@ -39,10 +39,10 @@ There’s great potential to track and add many of the available advanced statis
 Additionally, it would be great to expand the player component to include more statistics. If I could connect with an API that collects basketball player data it would be feasible to build a roster with any player in NBA history as opposed to a preselected set of players (which is very much one persons opinion, there's a bunch of great players I omitted choosing just 25).
 
 ### Search by category
-We'd like to have implemented a search by category, where a user could select a player category and only have players of that category appear.
+I'd like to have implemented a search feature, where a user could select a player category and only have players of that category appear.
 
 ## Document your planning, process and problem-solving strategy
-I had seen a tweet a few months ago that inspired the project: 
+I had seen a tweet a few months ago that inspired the project:
 
 ## API Routes
 

@@ -5,7 +5,7 @@ import { withRouter, Link } from 'react-router-dom'
 import messages from '../AutoDismissAlert/messages'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import { deepIndexOf } from '../../lib/deep-index-of'
+// import { deepIndexOf } from '../../lib/deep-index-of'
 // import CardGroup from 'react-bootstrap/CardGroup'
 
 const CurrentLineup = ({ user, msgAlert, match }) => {
@@ -20,30 +20,33 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
   useEffect(() => {
     getHistory(user)
       .then(data => {
-        console.log('lineups are ', data.data.lineup)
+        // console.log('lineups are ', data.data.lineup)
         const lineups = data.data.lineup
-        const activeLineup = lineups.find(lineup => lineup.active)
-        console.log('activeLinup is ', activeLineup)
         const currLineup = {
           players: [],
           quantities: [],
           totalCost: 0,
           active: true
         }
+        const activeLineup = lineups.find(lineup => lineup.active)
+        // console.log('activeLinup is ', activeLineup)
         currLineup.totalCost = activeLineup.totalCost
         currLineup.players = activeLineup.players
-        console.log('currLineup.players before loop is ', currLineup.players)
-
+        // console.log('currLineup.players before loop is ', currLineup.players)
+        console.log(activeLineup.players)
         for (let i = 0; i < activeLineup.players.length; i++) {
-          const currPlayer = activeLineup.player[i]
-          if (deepIndexOf(currLineup.players, currPlayer) === -1) {
+          console.log(activeLineup.players[i], 'this is an active player')
+          const currPlayer = activeLineup.players[i]
+          if (currLineup.players.indexOf(currPlayer) === -1) {
             currLineup.players.push(currPlayer)
-            const index = deepIndexOf(currLineup.players, currPlayer)
-            currLineup.quantities[index] = 1
-          } else {
-            const index = deepIndexOf(currLineup.players, currPlayer)
-            currLineup.quantities[index] += 1
+            // const index = deepIndexOf(currLineup.players, currPlayer)
+            /// currLineup.quantities[index] = 1
           }
+
+          // else {
+          //   const index = deepIndexOf(currLineup.players, currPlayer)
+          //   currLineup.quantities[index] += 1
+          // }
         }
 
         console.log('currLineup.players after loop is ', currLineup.players)
@@ -96,7 +99,7 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
       ))}
       <div className="moveRight">
         <h3> Total:${lineup.totalCost}</h3>
-        <Link to={'/checkout'}><Button className="moveRight" variant="primary">Squad Up!</Button></Link>
+        <Link to={'/checkout'}><Button className="moveRight" variant="primary">Finalize Your Team!</Button></Link>
       </div>
     </div>
   )
