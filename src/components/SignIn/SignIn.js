@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
-
+import { createEmptyLineup } from '../../api/lineup'
 import { signIn } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
 import Form from 'react-bootstrap/Form'
@@ -26,9 +26,16 @@ class SignIn extends Component {
     const { msgAlert, history, setUser } = this.props
     signIn(this.state)
       .then(res => {
-        setUser(res.data.user)
-        return res.data.user
+        const currUser = res.data.user
+        setUser(currUser)
+        return currUser
       })
+      .then(currUser => {
+        return createEmptyLineup(currUser)
+      })
+      // .then(currUser => {
+      //   currUser.save()
+      // })
       .then(() => msgAlert({
         heading: 'Sign In Success',
         message: messages.signInSuccess,

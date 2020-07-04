@@ -29,27 +29,15 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
           active: true
         }
         const activeLineup = lineups.find(lineup => lineup.active)
-        // console.log('activeLinup is ', activeLineup)
-        currLineup.totalCost = activeLineup.totalCost
+        //  currLineup.totalCost = activeLineup.totalCost
         currLineup.players = activeLineup.players
-        // console.log('currLineup.players before loop is ', currLineup.players)
-        console.log(activeLineup.players)
         for (let i = 0; i < activeLineup.players.length; i++) {
-          console.log(activeLineup.players[i], 'this is an active player')
           const currPlayer = activeLineup.players[i]
           if (currLineup.players.indexOf(currPlayer) === -1) {
             currLineup.players.push(currPlayer)
-            // const index = deepIndexOf(currLineup.players, currPlayer)
-            /// currLineup.quantities[index] = 1
           }
-
-          // else {
-          //   const index = deepIndexOf(currLineup.players, currPlayer)
-          //   currLineup.quantities[index] += 1
-          // }
         }
 
-        console.log('currLineup.players after loop is ', currLineup.players)
         setLineup(currLineup)
       })
       .catch(() => {
@@ -65,9 +53,9 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
   // get all lineups belonging to current user
     getHistory(user)
       .then(data => {
-        console.log('data is ', data)
         const lineups = data.data.lineup
         const activeLineup = lineups.find(lineup => lineup.active)
+        console.log(activeLineup.players)
         removeFromLineup(activeLineup._id, player, user)
       })
       .then(() => setRerender(!rerender))
@@ -87,10 +75,9 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
         <div key={player._id}>
           <Card className="container">
             <Card.Body className="lineupCost row" >
-              <Card.Img className="col-4" src={player.imageURL} />
               <div className="col-8">
                 <Card.Title><h5>{player.name}</h5></Card.Title>
-                <Card.Text className="lineupCost"> <p>{lineup.quantities[index]} &emsp; for &emsp; ${player.cost}</p></Card.Text>
+                <Card.Text className="lineupCost"> <p>Cost ${player.cost}</p></Card.Text>
                 <h5 className="removeLink" onClick={() => onRemoveFromLineup(event, player)}>remove</h5>
               </div>
             </Card.Body>

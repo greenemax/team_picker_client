@@ -18,7 +18,9 @@ export const addToLineup = (id, player, user) => {
     url: apiUrl + '/lineup/' + id,
     method: 'PATCH',
     data: {
-      'player': player
+      'player': {
+        'id': id
+      }
     },
     headers: {
       'Authorization': `Bearer ${user.token}`
@@ -26,12 +28,14 @@ export const addToLineup = (id, player, user) => {
   })
 }
 
-export const removeFromLineup = (id, player, user) => {
+export const removeFromLineup = (id, player, playerId, user) => {
   return axios({
-    url: apiUrl + `/lineup/${id}/players`,
+    url: apiUrl + `/lineup/${id}/players/${playerId}`,
     method: 'PATCH',
     data: {
-      'player': player
+      'player': {
+        'id': id
+      }
     },
     headers: {
       'Authorization': `Bearer ${user.token}`

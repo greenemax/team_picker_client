@@ -32,15 +32,18 @@ const PlayersPage = ({ user, msgAlert, setSearch }) => {
     // get all lineups belonging to current user
     getHistory(user)
       .then(data => {
-        const activeLineup = data.data.lineup
+      //  const activeLineup = data.data.lineup
+        console.log(data.data.lineup.id)
+        const id = data.data.lineup.id
+
         // find the current active lineup
-        console.log(data)
-        // console.log('this is player', player)
-        return addToLineup(activeLineup._id, player, user) // return the promise call so it continues down the chain
+        // console.log(data)
+        // console.log(activeLineup)
+        return addToLineup(id, player, user) // return the promise call so it continues down the chain
       })
-      // .then(lineup => {
-      //   console.log(lineup) // do something here with the response from the API (might be empty for PATCH)
-      // })
+      .then(lineup => {
+        console.log(lineup) // do something here with the response from the API (might be empty for PATCH)
+      })
       .catch(() => {
         msgAlert({
           heading: 'Add To Lineup Failed',
