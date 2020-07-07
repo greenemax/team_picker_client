@@ -32,17 +32,32 @@ const PlayersPage = ({ user, msgAlert, setSearch }) => {
     // get all lineups belonging to current user
     getHistory(user)
       .then(data => {
-      //  const activeLineup = data.data.lineup
-        console.log(data.data.lineup.id)
-        const id = data.data.lineup.id
-
-        // find the current active lineup
-        // console.log(data)
-        // console.log(activeLineup)
-        return addToLineup(id, player, user) // return the promise call so it continues down the chain
+        const lineups = data.data.lineup
+        const currLineup = {
+          players: [],
+          quantities: [],
+          totalCost: 0,
+          active: true
+        }
+        const activeLineup = lineups.find(lineup => lineup.active)
+        currLineup.players = activeLineup.players
+        for (let i = 0; i < activeLineup.players.length; i++) {
+          const currPlayer = activeLineup.players[i]
+          const lineupId = activeLineup._id
+          addToLineup(lineupId, currPlayer, user) // return the promise call so it continues down the chain
+        }
       })
-      .then(lineup => {
-        console.log(lineup) // do something here with the response from the API (might be empty for PATCH)
+      .then((data) => {
+        const lineups = data.data.lineup
+        const currLineup = {
+          players: [],
+          quantities: [],
+          totalCost: 0,
+          active: true
+        }
+        const activeLineup = lineups.find(lineup => lineup.active)
+        currLineup.players = activeLineup.players
+        console.log(activeLineup)
       })
       .catch(() => {
         msgAlert({

@@ -1,6 +1,21 @@
 import apiUrl from '../apiConfig'
 import axios from 'axios'
 
+export const addToLineup = (lineupId, playerId, user) => {
+  return axios({
+    url: apiUrl + '/lineup/' + lineupId,
+    method: 'PATCH',
+    data: {
+      'player': {
+        'playerId': playerId
+      }
+    },
+    headers: {
+      'Authorization': `Bearer ${user.token}`
+    }
+  })
+}
+
 export const getPlayers = () => {
   return axios({
     url: apiUrl + '/players'
@@ -13,28 +28,14 @@ export const getOnePlayer = id => {
   })
 }
 
-export const addToLineup = (id, player, user) => {
+export const removeFromLineup = (lineupId, playerId, user) => {
+  console.log(lineupId)
   return axios({
-    url: apiUrl + '/lineup/' + id,
+    url: apiUrl + `/lineup/${lineupId}/players/${playerId}/`,
     method: 'PATCH',
     data: {
       'player': {
-        'id': id
-      }
-    },
-    headers: {
-      'Authorization': `Bearer ${user.token}`
-    }
-  })
-}
-
-export const removeFromLineup = (id, player, playerId, user) => {
-  return axios({
-    url: apiUrl + `/lineup/${id}/players/${playerId}`,
-    method: 'PATCH',
-    data: {
-      'player': {
-        'id': id
+        'playerId': playerId
       }
     },
     headers: {

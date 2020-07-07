@@ -23,16 +23,9 @@ class SignUp extends Component {
 
   onSignUp = event => {
     event.preventDefault()
-    // let userId = null
-    // let userToken = null
     const { msgAlert, history, setUser } = this.props
     signUp(this.state)
       .then(() => signIn(this.state))
-      // .then(data => {
-      //   userId = data.data.user._id
-      //   userToken = data.data.user.token
-      //   return data
-      // })
       .then(res => {
         const currUser = res.data.user
         setUser(currUser)
@@ -41,9 +34,6 @@ class SignUp extends Component {
       .then(currUser => {
         return createEmptyLineup(currUser)
       })
-      // .then(currUser => {
-      //   currUser.save()
-      // })
       .then(() => msgAlert({
         heading: 'Sign Up Success',
         message: messages.signUpSuccess,

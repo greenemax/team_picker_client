@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const createEmptyLineup = user => {
   return axios({
-    url: apiUrl + '/lineup',
+    url: apiUrl + '/lineups',
     method: 'POST',
     data: {
       'lineup': {
