@@ -57,7 +57,7 @@ const Confirmation = ({ user, msgAlert, customer }) => {
       <Accordion defaultActiveKey="0">
         <Card>
           <Card.Header className="title">
-        Billing Information
+        Lineup Information
           </Card.Header>
           <Accordion.Collapse eventKey="0" className="container formText">
             <Card.Body><Form onSubmit={onShipSubmit} className="formText">

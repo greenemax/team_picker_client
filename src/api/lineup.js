@@ -1,16 +1,28 @@
 import apiUrl from '../apiConfig'
 import axios from 'axios'
 
-export const createEmptyLineup = user => {
+export const createLineup = user => {
   return axios({
-    url: apiUrl + '/lineups',
+    url: apiUrl + '/lineup-create',
     method: 'POST',
     data: {
       'lineup': {
-        'players': [],
-        'user': `${user._id}`,
-        'active': true,
-        'totalCost': 0
+        'lineupName': null
+      }
+    },
+    headers: {
+      'Authorization': `Bearer ${user.token}`
+    }
+  })
+}
+
+export const updateLineup = (user, lineupId, lineupName) => {
+  return axios({
+    url: apiUrl + '/lineup-edit' + lineupId,
+    method: 'PATCH',
+    data: {
+      'lineup': {
+        'lineupName': lineupName
       }
     },
     headers: {
@@ -28,17 +40,12 @@ export const getHistory = user => {
   })
 }
 
-export const changeLineupActive = (user, id, boolean) => {
+export const deleteLineup = (user, id) => {
   return axios({
-    url: apiUrl + `/lineup/${id}/active`,
-    method: 'PATCH',
-    data: {
-      'lineup': {
-        'active': boolean
-      }
-    },
+    url: `${apiUrl}/lineups/${id}`,
     headers: {
       'Authorization': `Bearer ${user.token}`
-    }
+    },
+    method: 'DELETE'
   })
 }

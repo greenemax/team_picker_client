@@ -1,97 +1,131 @@
-// import React, { useState, useEffect } from 'react'
-// import { removeFromLineup } from '../../api/players'
-// import { getHistory } from '../../api/lineup'
-// import { withRouter, Link } from 'react-router-dom'
-// import messages from '../AutoDismissAlert/messages'
+import React, { useState, useEffect, Component } from 'react'
+import { getHistory, deleteLineup, updateLineup } from '../../api/lineup'
+import { withRouter, Redirect } from 'react-router-dom'
+import messages from '../AutoDismissAlert/messages'
+import LineupForm from '../shared/lineupForm.js'
+import Layout from '../shared/layout.js'
+import apiUrl from '../../apiConfig.js'
+import axios from 'axios'
 // import Button from 'react-bootstrap/Button'
-// import Card from 'react-bootstrap/Card'
-// // import { deepIndexOf } from '../../lib/deep-index-of'
-// // import CardGroup from 'react-bootstrap/CardGroup'
-//
-// const CurrentLineup = ({ user, msgAlert, match }) => {
-//   const [lineup, setLineup] = useState({
-//     players: [],
-//     quantities: [],
-//     totalCost: 0,
-//     active: true
-//   })
-//   const [rerender, setRerender] = useState(false)
-//
-//   useEffect(() => {
-//     getHistory(user)
-//       .then(data => {
-//         // // console.log('lineups are ', data.data.lineup)
-//         // const lineups = data.data.lineup
-//         const currLineup = {
-//           players: [],
-//           quantities: [],
-//           totalCost: 0,
-//           active: true
-//         }
-//         // const activeLineup = lineups.find(lineup => lineup.active)
-//         // //  currLineup.totalCost = activeLineup.totalCost
-//         // currLineup.players = activeLineup.players
-//         // for (let i = 0; i < activeLineup.players.length; i++) {
-//         //   const currPlayer = activeLineup.players[i]
-//         //   if (currLineup.players.indexOf(currPlayer) === -1) {
-//         //     currLineup.players.push(currPlayer)
-//         //   }
-//         // }
-//
-//         setLineup(currLineup)
-//       })
-//       .catch(() => {
-//         msgAlert({
-//           heading: 'Lineup Not Found',
-//           message: messages.getLineupFailure,
-//           variant: 'danger'
-//         })
-//       })
-//   }, [rerender])
-//
-//   // const onRemoveFromLineup = (event, player) => {
-//   // // get all lineups belonging to current user
-//   //   getHistory(user)
-//   //     .then(data => {
-//   //       const lineups = data.data.lineup
-//   //       const activeLineup = lineups.find(lineup => lineup.active)
-//   //       const lineupId = activeLineup._id
-//   //       const playerRemoveName = activeLineup._id.players.playerId
-//   //       console.log(lineups)
-//   //       removeFromLineup(activeLineup, lineupId, playerRemoveName, user)
-//   //     })
-//   //     .then(() => setRerender(!rerender))
-//   //     .catch(() => {
-//   //       msgAlert({
-//   //         heading: 'Lineup Failed',
-//   //         message: messages.removeLineupFailure,
-//   //         variant: 'danger'
-//   //       })
-//   //     })
-//   // }
-//
-//   return (
-//     <div>
-//       <h2 className="title">Your Starting Lineup</h2>
-//       {lineup.players.map((player, index) => (
-//         <div key={player._id}>
-//           <Card className="container">
-//             <Card.Body className="lineupCost row" >
-//               <div className="col-8">
-//                 <Card.Title><h5>{player.name}</h5></Card.Title>
-//                 <Card.Text className="lineupCost"> <p>Cost ${player.cost}</p></Card.Text>
-//                 <h5 className="removeLink" onClick={() => onRemoveFromLineup(event, player)}>remove</h5>
-//               </div>
-//             </Card.Body>
-//           </Card>
-//         </div>
-//       ))}
-//       <div className="moveRight">
-//         <h3> Total:${lineup.totalCost}</h3>
-//         <Link to={'/checkout'}><Button className="moveRight" variant="primary">Finalize Your Team!</Button></Link>
-//       </div>
-//     </div>
-//   )
-// }
-//
-// export default withRouter(CurrentLineup)
+import Card from 'react-bootstrap/Card'
+// import { deepIndexOf } from '../../lib/deep-index-of'
+// import CardGroup from 'react-bootstrap/CardGroup'
+
+const CurrentLineup = ({ user, msgAlert, match }) => {
+  const [lineup, setLineup] = useState([])
+  const [deleted, setDeleted] = useState(false)
+  const [updated, setUpdated] = useState(false)
+  // const [rerender] = useState(false)
+  useEffect(() => {
+    getHistory(user)
+      .then(data => {
+        console.log(data)
+        // const lineups = data.data.lineup
+        setLineup(data.data.lineup)
+        console.log(lineup)
+      })
+      .catch(() => {
+        msgAlert({
+          heading: 'Lineup Not Found',
+          message: messages.getLineupFailure,
+          variant: 'danger'
+        })
+      })
+  }, [])
+
+  const onDeleteLineup = (lineupUser, lineupId) => {
+    deleteLineup(lineupUser, lineupId)
+      .then(() => setDeleted(true))
+      .catch(() => {
+        msgAlert({
+          heading: 'Lineup Not Deleted',
+          message: messages.getLineupFailure,
+          variant: 'danger'
+        })
+      })
+  }
+
+  if (deleted) {
+    return <Redirect to={
+      { pathname: '/lineups-create' }
+    } />
+  }
+
+  const onEditLineup = (lineupUser, lineupId) => {
+    updateLineup(lineupUser, lineupId)
+      .then(() => setUpdated(true))
+      .catch(() => {
+        msgAlert({
+          heading: 'Lineup Not Deleted',
+          message: messages.getLineupFailure,
+          variant: 'danger'
+        })
+      })
+  }
+
+  componentDidMount () {
+    axios(`${apiUrl}/lineups/${this.props.match.params.id}`)
+      .then(res => this.setState({ lineup: res.data.lineup }))
+      .catch(console.error)
+  }
+
+  handleChange = event => {
+    const updatedField = { [event.target.name]: event.target.value }
+
+    const editedLineup = Object.assign(this.state.lineup, updatedField)
+
+    this.setState({ lineup: editedLineup })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+
+    axios({
+      url: `${apiUrl}/lineups/${this.props.match.params.id}`,
+      method: 'PATCH',
+      data: { lineup: this.state.lineup }
+    })
+      .then(() => this.setState({ updated: true }))
+      .catch(console.error)
+  }
+
+  render () {
+    const { lineup, updated } = this.state
+    const { handleChange, handleSubmit } = this
+
+  if (updated) {
+    return <Redirect to={
+      { pathname: '/lineups-create' }
+    } />
+  }
+
+  return (
+    <div>
+      <h2 className="title">Your Lineup</h2>
+      {lineup.map((line) => (
+        <div key={line._id}>
+          <Card className="container">
+            <Card.Body className="lineupCost row" >
+              <div className="col-8">
+                <h5>{line.lineupName}</h5>
+                <h5 className="removeLink" onClick={() => onDeleteLineup(user, line._id)}>remove</h5>
+                <Layout>
+                  <LineupForm
+                    lineup={lineup}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    cancelPath={`/lineups/${this.props.match.params.id}`}
+                  />
+                </Layout>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      ))}
+      <div className="moveRight">
+      </div>
+    </div>
+  )
+}
+
+export default withRouter(CurrentLineup)

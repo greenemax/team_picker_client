@@ -4,10 +4,12 @@ import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 const authenticatedOptions = (
   <Fragment>
+    <NavDropdown title="Lineups" id="basic-nav-dropdown">
+      <NavDropdown.Item href="#lineups-create"><Nav.Link href="#lineups-create">New Lineup</Nav.Link></NavDropdown.Item>
+    </NavDropdown>
     <NavDropdown title="My Account" id="basic-nav-dropdown">
       <NavDropdown.Item href="#change-password"><Nav.Link href="#change-password">Change Password</Nav.Link></NavDropdown.Item>
       <NavDropdown.Item href="#sign-out"><Nav.Link href="#sign-out">Sign Out</Nav.Link></NavDropdown.Item>
-      <NavDropdown.Item href="#get-history"><Nav.Link href="#get-history">View Past Lineups</Nav.Link></NavDropdown.Item>
     </NavDropdown>
     <Nav.Link href="#lineup">My Lineup</Nav.Link>
   </Fragment>
@@ -22,7 +24,7 @@ const unauthenticatedOptions = (
 
 const alwaysOptions = (
   <Fragment>
-    <Nav.Link href="/">Home</Nav.Link>
+    <Nav.Link href="#/">Home</Nav.Link>
   </Fragment>
 )
 

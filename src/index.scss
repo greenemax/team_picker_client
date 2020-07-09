@@ -3,13 +3,13 @@ $theme-colors: (
 );
 
 .navBar {
-  color: #ffffff;
+  color: black;
   background-color: #CC092e;
   font-family: 'Graduate', cursive;
 }
 
 main {
-  background-color: #ffffff;
+  background-color: black;
   margin-bottom: 25px !important;
 }
 
@@ -38,7 +38,7 @@ body {
 
 
 .card {
-  color: #ffffff !important;
+  color: black !important;
   background-color: #003479 !important;
   text-align: center;
   margin: 15px;
@@ -66,7 +66,7 @@ body {
 }
 .modal-content{
   background-color: #003479 !important;
-  color:#ffffff;
+  color:black;
 }
 .removeLink:hover {
   color: darkRed;
@@ -81,20 +81,20 @@ body {
   margin-left: 5px;
 }
 
-.goodButton{
+.goodButton {
   visibility: visible;
 }
 
-.cartCost{
+.cartCost {
   text-align: right !important;
 }
 
-.formText{
-  color:#ffffff;
+.formText {
+  color:black;
   text-align: left;
 }
 
-addressMargin{
+addressMargin {
   padding-bottom: 10px !important;
 }
 .billingButton{

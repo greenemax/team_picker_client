@@ -3,10 +3,8 @@ import { Redirect, Link } from 'react-router-dom'
 
 // import axios and apiUrl
 import axios from 'axios'
-import apiUrl from './apiConfig'
-
-import Layout from './shared/Layout'
-
+import apiUrl from '../../apiConfig.js'
+import Layout from '../shared/Layout'
 class LineupShow extends Component {
   constructor () {
     super()
@@ -27,13 +25,13 @@ class LineupShow extends Component {
   }
 
   deleteLineup = () => {
-    // axios.delete(`${apiUrl}/books/${this.props.match.params.id}`)
+    // axios.delete(`${apiUrl}/lineups/${this.props.match.params.id}`)
     axios({
       method: 'DELETE',
       url: `${apiUrl}/lineups/${this.props.match.params.id}`
     })
       .then(res => {
-        // change state to reflect that the book was deleted
+        // change state to reflect that the lineup was deleted
         this.setState({ deleted: true })
       })
       .catch(console.error)
@@ -47,13 +45,13 @@ class LineupShow extends Component {
     if (!lineup) {
       lineupJsx = 'Loading...'
     } else if (deleted) {
-      // this.props.history.push('/books')
-      lineupJsx = <Redirect to="/books"/>
+      // this.props.history.push('/lineups')
+      lineupJsx = <Redirect to="/lineups"/>
     } else {
       lineupJsx = (
         <div>
           <h3>{lineup.name}</h3>
-          <button onClick={this.deleteLineup}>Delete Book</button>
+          <button onClick={this.deleteLineup}>Delete lineup</button>
           <Link to={`/lineups/${this.props.match.params.id}/edit`}><button>Update Lineup</button></Link>
         </div>
       )

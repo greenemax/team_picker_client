@@ -4,9 +4,9 @@ import apiUrl from '../../apiConfig.js'
 import axios from 'axios'
 import LineupForm from '../shared/lineupForm.js'
 import Layout from '../shared/Layout'
-class LineupCreate extends Component {
-  constructor () {
-    super()
+class LineupEdit extends Component {
+  constructor (props) {
+    super(props)
 
     this.state = {
       lineup: {
@@ -16,21 +16,32 @@ class LineupCreate extends Component {
     }
   }
 
-  handleChange = (event) => {
+  componentDidMount () {
+    console.log(this.props)
+    axios(`${apiUrl}/lineups-edit/`)
+      .then(res => this.setState({ lineup: res.data.lineup }))
+      .catch(console.error)
+  }
+
+  handleChange = event => {
     const updatedField = { [event.target.name]: event.target.value }
-    this.setState(currentState => {
-      return { lineup: { ...currentState.lineup, ...updatedField } }
-    })
+
+    const editedLineup = Object.assign(this.state.lineup, updatedField)
+
+    this.setState({ lineup: editedLineup })
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
+    console.log(this.props)
     axios({
-      url: apiUrl + '/lineup-create',
-      method: 'POST',
+      url: apiUrl + '/lineup-edit',
+      method: 'PATCH',
       data: {
         'lineup': {
-          'lineupName': this.state.lineup.name
+          'lineupName': this.state.lineup.lineupName,
+          'active': true,
+          'totalCost': 0
         }
       },
       headers: {
@@ -59,4 +70,4 @@ class LineupCreate extends Component {
   }
 }
 
-export default LineupCreate
+export default LineupEdit

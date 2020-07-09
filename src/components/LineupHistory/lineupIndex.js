@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import axios from 'axios'
-import apiUrl from './apiConfig.js'
-
-import Layout from './shared/Layout'
+import apiUrl from '../../apiConfig.js'
+import Layout from '../shared/Layout'
 
 class LineupIndex extends Component {
   constructor (props) {
@@ -28,34 +27,18 @@ class LineupIndex extends Component {
   }
 
   render () {
-    const { lineups } = this.state
-
-    let lineupJsx
-
-    if (!lineups) {
-      // books are null, we are still loading the books in
-      lineupJsx = 'Loading...'
-    } else if (!lineups.length) {
-      // the length of the books array is 0
-      // we have no books to display
-      lineupJsx = 'No books to display, go make some!'
-    } else {
-      // we got our books! display them:
-      lineupJsx = (
-        <ul>
-          {lineups.map(lineup => (
-            <li key={lineup._id}>
-              <Link to={`/books/${lineup._id}`}>{lineup.title}</Link>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+    const lineups = this.state.lineups.map(lineup => (
+      <li key={lineup.id}>
+        <Link to={`/lineups/${lineup._id}`}>{lineup.title}</Link>
+      </li>
+    ))
 
     return (
       <Layout>
-        <h2>Lineup Page</h2>
-        {lineupJsx}
+        <h4>Lineups</h4>
+        <ul>
+          {lineups}
+        </ul>
       </Layout>
     )
   }
