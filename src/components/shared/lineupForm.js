@@ -6,7 +6,6 @@ import React from 'react'
 //   // get all lineups belonging to current user
 //   const lineupName = data.data.user.lineups.lineup.name
 //   // const user = data.data.user
-//   console.log(lineupName)
 //   return createLineup(lineupName)
 // }
 

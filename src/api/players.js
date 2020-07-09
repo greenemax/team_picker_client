@@ -29,7 +29,6 @@ export const getOnePlayer = id => {
 }
 
 export const removeFromLineup = (lineupId, playerId, user) => {
-  console.log(lineupId)
   return axios({
     url: apiUrl + `/lineup/${lineupId}/players/${playerId}/`,
     method: 'PATCH',

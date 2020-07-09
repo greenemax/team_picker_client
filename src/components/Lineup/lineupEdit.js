@@ -17,7 +17,6 @@ class LineupEdit extends Component {
   }
 
   componentDidMount () {
-    console.log(this.props)
     axios(`${apiUrl}/lineups-edit/`)
       .then(res => this.setState({ lineup: res.data.lineup }))
       .catch(console.error)
@@ -33,7 +32,6 @@ class LineupEdit extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log(this.props)
     axios({
       url: apiUrl + '/lineup-edit',
       method: 'PATCH',

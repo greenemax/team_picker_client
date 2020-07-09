@@ -57,7 +57,6 @@
 //         }
 //         const activeLineup = lineups.find(lineup => lineup.active)
 //         currLineup.players = activeLineup.players
-//         console.log(activeLineup)
 //       })
 //       .catch(() => {
 //         msgAlert({

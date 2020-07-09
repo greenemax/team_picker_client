@@ -19,10 +19,8 @@ const CurrentLineup = ({ user, msgAlert, match }) => {
   useEffect(() => {
     getHistory(user)
       .then(data => {
-        console.log(data)
         // const lineups = data.data.lineup
         setLineup(data.data.lineup)
-        console.log(lineup)
       })
       .catch(() => {
         msgAlert({

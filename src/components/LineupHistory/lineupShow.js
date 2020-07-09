@@ -18,7 +18,6 @@ class LineupShow extends Component {
   componentDidMount () {
     axios(`${apiUrl}/lineups/${this.props.match.params.id}`)
       .then(res => {
-        console.log(res)
         this.setState({ lineup: res.data.lineup })
       })
       .catch(console.error)

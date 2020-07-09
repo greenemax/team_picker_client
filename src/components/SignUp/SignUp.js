@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { signUp, signIn } from '../../api/auth'
-// import { createLineup } from '../../api/lineup'
 import messages from '../AutoDismissAlert/messages'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -38,12 +37,6 @@ class SignUp extends Component {
         setUser(currUser)
         return currUser
       })
-      // .then(currUser => {
-      //   console.log(currUser)
-      //   return createLineup(currUser)
-      //   // return currUser.save()
-      // })
-      .then(console.log)
       .then(() => msgAlert({
         heading: 'Sign Up Success',
         message: messages.signUpSuccess,

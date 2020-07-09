@@ -13,7 +13,6 @@ const Confirmation = ({ user, msgAlert, customer }) => {
     players: [],
     totalCost: 0
   })
-  console.log(lineup)
 
   const onShipSubmit = event => {
     event.preventDefault()
