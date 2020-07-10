@@ -9,7 +9,6 @@ const Lineup = props => {
   const [lineup, setLineup] = useState(null)
   const [deleted, setDeleted] = useState(false)
   const getLineup = () => {
-    console.log(props)
     return axios({
       url: `${apiUrl}/lineups/${props.match.params.id}`,
       method: 'GET',
@@ -20,7 +19,6 @@ const Lineup = props => {
   }
 
   useEffect(() => {
-    console.log(props)
     getLineup()
       .then(res => setLineup(res.data.lineup))
       .catch(console.error)

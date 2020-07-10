@@ -6,7 +6,6 @@ import LineupForm from '../lineupSubmit/lineupForm'
 import Layout from '../shared/Layout'
 
 const LineupCreate = (props) => {
-  console.log(props)
   const [lineup, setLineup] = useState({
     name: ''
   })
@@ -16,7 +15,6 @@ const LineupCreate = (props) => {
     event.persist()
 
     setLineup(prevLineup => {
-      console.log(event.target)
       const updatedField = { [event.target.name]: event.target.value }
       const editedLineup = Object.assign({}, prevLineup, updatedField)
       setLineup(editedLineup)

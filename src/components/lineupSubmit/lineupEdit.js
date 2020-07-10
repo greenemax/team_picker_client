@@ -11,7 +11,6 @@ const LineupEdit = (props) => {
   const [updated, setUpdated] = useState(false)
 
   const updateLineup = () => {
-    console.log(props)
     return axios({
       url: `${apiUrl}/lineups/${props.match.params.id}`,
       method: 'GET',

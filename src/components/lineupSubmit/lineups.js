@@ -17,15 +17,12 @@ const Lineups = props => {
     })
   }
   useEffect(() => {
-    console.log('hi')
     getLineups()
       .then(res => {
-        console.log(res)
         return res
       })
       .then(res => setLineups(res.data.lineup))
       .then(() => {
-        console.log(lineups)
       })
       .catch(console.error)
   }, [])
