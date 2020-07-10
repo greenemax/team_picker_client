@@ -5,13 +5,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 const authenticatedOptions = (
   <Fragment>
     <NavDropdown title="Lineups" id="basic-nav-dropdown">
-      <NavDropdown.Item href="#lineups-create"><Nav.Link href="#lineups-create">New Lineup</Nav.Link></NavDropdown.Item>
+      <NavDropdown.Item href="#create-lineup/">New Lineup</NavDropdown.Item>
+      <NavDropdown.Item href="#lineups/"> View Lineups</NavDropdown.Item>
     </NavDropdown>
     <NavDropdown title="My Account" id="basic-nav-dropdown">
-      <NavDropdown.Item href="#change-password"><Nav.Link href="#change-password">Change Password</Nav.Link></NavDropdown.Item>
-      <NavDropdown.Item href="#sign-out"><Nav.Link href="#sign-out">Sign Out</Nav.Link></NavDropdown.Item>
+      <NavDropdown.Item href="#change-password">Change Password</NavDropdown.Item>
+      <NavDropdown.Item href="#sign-out">Sign Out</NavDropdown.Item>
     </NavDropdown>
-    <Nav.Link href="#lineup">My Lineup</Nav.Link>
+    <Nav.Link href="#/">Home</Nav.Link>
   </Fragment>
 )
 
@@ -19,12 +20,6 @@ const unauthenticatedOptions = (
   <Fragment>
     <Nav.Link href="#sign-up">Sign Up</Nav.Link>
     <Nav.Link href="#sign-in">Sign In</Nav.Link>
-  </Fragment>
-)
-
-const alwaysOptions = (
-  <Fragment>
-    <Nav.Link href="#/">Home</Nav.Link>
   </Fragment>
 )
 
@@ -37,7 +32,6 @@ const Header = ({ user }) => (
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto">
         { user && <span className="navbar-text mr-2">Welcome, {user.email}</span>}
-        { alwaysOptions }
         { user ? authenticatedOptions : unauthenticatedOptions }
       </Nav>
     </Navbar.Collapse>
